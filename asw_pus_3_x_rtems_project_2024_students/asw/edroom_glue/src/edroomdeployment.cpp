@@ -64,13 +64,13 @@ void CEDROOMSystemCommSAP::SetComponents(ICUASW   *p_comp1,
 //*****************************************************************************
  
  
-TEDROOMSignal CEDROOMSystemCommSAP::C3TM_ChannelCtrl_PTMChannelCtrl2__C4HK_FDIRMng_PTMChannelCtrl(TEDROOMSignal signalOut){
+TEDROOMSignal CEDROOMSystemCommSAP::C4HK_FDIRMng_PTMChannelCtrl__C3TM_ChannelCtrl_PTMChannelCtrl2(TEDROOMSignal signalOut){
  
 	TEDROOMSignal signalIn;
  
 	switch(signalOut){
  
-		case( CCTM_ChannelCtrl::STMQueued):	 signalIn=CCHK_FDIRMng::STMQueued; break;
+		case( CCHK_FDIRMng::STxTM):	 signalIn=CCTM_ChannelCtrl::STxTM; break;
  
 		default: signalIn=(TEDROOMSignal)(-1); break;
  
@@ -79,13 +79,13 @@ TEDROOMSignal CEDROOMSystemCommSAP::C3TM_ChannelCtrl_PTMChannelCtrl2__C4HK_FDIRM
  
 }
  
-TEDROOMSignal CEDROOMSystemCommSAP::C4HK_FDIRMng_PTMChannelCtrl__C3TM_ChannelCtrl_PTMChannelCtrl2(TEDROOMSignal signalOut){
+TEDROOMSignal CEDROOMSystemCommSAP::C3TM_ChannelCtrl_PTMChannelCtrl2__C4HK_FDIRMng_PTMChannelCtrl(TEDROOMSignal signalOut){
  
 	TEDROOMSignal signalIn;
  
 	switch(signalOut){
  
-		case( CCHK_FDIRMng::STxTM):	 signalIn=CCTM_ChannelCtrl::STxTM; break;
+		case( CCTM_ChannelCtrl::STMQueued):	 signalIn=CCHK_FDIRMng::STMQueued; break;
  
 		default: signalIn=(TEDROOMSignal)(-1); break;
  
@@ -184,9 +184,9 @@ void CEDROOMSystemCommSAP::RegisterInterfaces(){
  
 void CEDROOMSystemCommSAP::SetLocalConnections(){
  
-	m_localCommSAP.Connect(mp_comp3->TMChannelCtrl2, mp_comp4->TMChannelCtrl, connections[0], 
-					C3TM_ChannelCtrl_PTMChannelCtrl2__C4HK_FDIRMng_PTMChannelCtrl, 
-					C4HK_FDIRMng_PTMChannelCtrl__C3TM_ChannelCtrl_PTMChannelCtrl2);
+	m_localCommSAP.Connect(mp_comp4->TMChannelCtrl, mp_comp3->TMChannelCtrl2, connections[0], 
+					C4HK_FDIRMng_PTMChannelCtrl__C3TM_ChannelCtrl_PTMChannelCtrl2, 
+					C3TM_ChannelCtrl_PTMChannelCtrl2__C4HK_FDIRMng_PTMChannelCtrl);
  
 	m_localCommSAP.Connect(mp_comp2->TMChannelCtrl, mp_comp3->TMChannelCtrl, connections[1], 
 					C2EPDManager_PTMChannelCtrl__C3TM_ChannelCtrl_PTMChannelCtrl, 

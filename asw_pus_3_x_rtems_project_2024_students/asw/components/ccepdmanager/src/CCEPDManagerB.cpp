@@ -14,8 +14,7 @@ CCEPDManager::EDROOM_CTX_Top_0::EDROOM_CTX_Top_0(CCEPDManager &act,
 	 CDEventList & EDROOMpVarVCurrentEvList,
 	 CDTCHandler & EDROOMpVarVCurrentTC,
 	 CDTMList & EDROOMpVarVCurrentTMList,
-	 CEDROOMPOOLCDTMList & EDROOMpPoolCDTMList,
-	 CEDROOMPOOLCDTCHandler & EDROOMpPoolCDTCHandler ):
+	 CEDROOMPOOLCDTMList & EDROOMpPoolCDTMList ):
 
 	EDROOMcomponent(act),
 	Msg(EDROOMcomponent.Msg),
@@ -26,8 +25,7 @@ CCEPDManager::EDROOM_CTX_Top_0::EDROOM_CTX_Top_0(CCEPDManager &act,
 	VCurrentEvList(EDROOMpVarVCurrentEvList),
 	VCurrentTC(EDROOMpVarVCurrentTC),
 	VCurrentTMList(EDROOMpVarVCurrentTMList),
-	EDROOMPoolCDTMList(EDROOMpPoolCDTMList),
-	EDROOMPoolCDTCHandler(EDROOMpPoolCDTCHandler)
+	EDROOMPoolCDTMList(EDROOMpPoolCDTMList)
 {
 }
 
@@ -42,8 +40,7 @@ CCEPDManager::EDROOM_CTX_Top_0::EDROOM_CTX_Top_0(EDROOM_CTX_Top_0 &context):
 	VCurrentEvList(context.VCurrentEvList),
 	VCurrentTC(context.VCurrentTC),
 	VCurrentTMList(context.VCurrentTMList),
-	EDROOMPoolCDTMList(context.EDROOMPoolCDTMList ),
-	EDROOMPoolCDTCHandler(context.EDROOMPoolCDTCHandler )
+	EDROOMPoolCDTMList(context.EDROOMPoolCDTMList )
 {
 
 }
@@ -175,27 +172,27 @@ return VCurrentTC.IsRebootTC();
 
 
 
+void	CCEPDManager::EDROOM_CTX_Top_0::FFwdHK_FDIRTC()
+
+{
+   //Allocate data from pool
+  CDTCHandler * pSHK_FDIR_TC_Data = EDROOMPoolCDTCHandler.AllocData();
+CDTCHandler * pSHK_FDIR_TC_Data = EDROOMPoolCDTCHandler.AllocData();
+*pSHK_FDIR_TC_Data=VCurrentTC; 
+HK_FDIRCtrl.send(SHK_FDIR_TC, pSHK_FDIR_TC_Data, 
+&EDROOMPoolCDTCHandler);
+   //Send message 
+   HK_FDIRCtrl.send(SHK_FDIR_TC,pSHK_FDIR_TC_Data,&EDROOMPoolCDTCHandler); 
+}
+
+
+
 bool	CCEPDManager::EDROOM_CTX_Top_0::GFwdToHK_FDIR()
 
 {
 
 return VCurrentTC.IsHK_FDIRTC();
 
-}
-
-
-
-void	CCEPDManager::EDROOM_CTX_Top_0::FFwdHK_FDIRTC()
-
-{
-   //Allocate data from pool
-  CDTCHandler * pSHK_FDIR_TC_Data = EDROOMPoolCDTCHandler.AllocData();
-	
-		// Complete Data 
-	
-*pSHK_FDIR_TC_Data=VCurrentTC;   
-   //Send message 
-   HK_FDIRCtrl.send(SHK_FDIR_TC,pSHK_FDIR_TC_Data,&EDROOMPoolCDTCHandler); 
 }
 
 
@@ -216,20 +213,6 @@ CDTMList *	CCEPDManager::EDROOM_CTX_Top_0::CEDROOMPOOLCDTMList::AllocData()
 	return(CDTMList*)CEDROOMProtectedMemoryPool::AllocData();
 }
 
-	//CEDROOMPOOLCDTCHandler
-
-CCEPDManager::EDROOM_CTX_Top_0::CEDROOMPOOLCDTCHandler::CEDROOMPOOLCDTCHandler(
-			TEDROOMUInt32 elemCount,CDTCHandler* pMem,bool * pMemMarks):
-				CEDROOMProtectedMemoryPool(elemCount, pMem, pMemMarks,
-					sizeof(CDTCHandler))
-{
-}
-
-CDTCHandler *	CCEPDManager::EDROOM_CTX_Top_0::CEDROOMPOOLCDTCHandler::AllocData()
-{
-	return(CDTCHandler*)CEDROOMProtectedMemoryPool::AllocData();
-}
-
 
 
 // ***********************************************************************
@@ -248,14 +231,10 @@ CCEPDManager::EDROOM_SUB_Top_0::EDROOM_SUB_Top_0 (CCEPDManager&act
 			VCurrentEvList,
 			VCurrentTC,
 			VCurrentTMList,
-			EDROOMPoolCDTMList,
-			EDROOMPoolCDTCHandler),
+			EDROOMPoolCDTMList),
 		EDROOMPoolCDTMList(
 			10, pEDROOMMemory->poolCDTMList,
-			pEDROOMMemory->poolMarkCDTMList),
-		EDROOMPoolCDTCHandler(
-			10, pEDROOMMemory->poolCDTCHandler,
-			pEDROOMMemory->poolMarkCDTCHandler)
+			pEDROOMMemory->poolMarkCDTMList)
 {
 
 }

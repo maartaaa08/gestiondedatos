@@ -65,10 +65,6 @@ public:
 			CDTMList	poolCDTMList[10+1];
 			//! CDTMList Data Pool Marks Memory
 			bool	poolMarkCDTMList[10];
-			//! CDTCHandler Data Pool Memory
-			CDTCHandler	poolCDTCHandler[10+1];
-			//! CDTCHandler Data Pool Marks Memory
-			bool	poolMarkCDTCHandler[10];
 
 
 			/** \brief This function is used for setting the Component Memory
@@ -267,12 +263,6 @@ public:
 			CDTMList	* AllocData();
 		};
 		CEDROOMPOOLCDTMList	& EDROOMPoolCDTMList;
-		class CEDROOMPOOLCDTCHandler:public CEDROOMProtectedMemoryPool {
-			public:
-			CEDROOMPOOLCDTCHandler(TEDROOMUInt32 elemCount,CDTCHandler *pMem, bool *pMarks);
-			CDTCHandler	* AllocData();
-		};
-		CEDROOMPOOLCDTCHandler	& EDROOMPoolCDTCHandler;
 
 
 		//!Constructor
@@ -280,8 +270,7 @@ public:
 				CDEventList & EDROOMpVarVCurrentEvList,
 				CDTCHandler & EDROOMpVarVCurrentTC,
 				CDTMList & EDROOMpVarVCurrentTMList,
-				CEDROOMPOOLCDTMList & EDROOMpPoolCDTMList,
-				CEDROOMPOOLCDTCHandler & EDROOMpPoolCDTCHandler );
+				CEDROOMPOOLCDTMList & EDROOMpPoolCDTMList );
 
 		//!Copy constructor
 		EDROOM_CTX_Top_0 (EDROOM_CTX_Top_0 &context);
@@ -354,12 +343,12 @@ public:
 		/**
 		 * \brief 
 		 */
-		bool	GFwdToHK_FDIR();
+		void	FFwdHK_FDIRTC();
 
 		/**
 		 * \brief 
 		 */
-		void	FFwdHK_FDIRTC();
+		bool	GFwdToHK_FDIR();
 
 	};
 
@@ -391,7 +380,6 @@ public:
 
 		// Pools**************************************************
 		CEDROOMPOOLCDTMList	EDROOMPoolCDTMList;
-		CEDROOMPOOLCDTCHandler	EDROOMPoolCDTCHandler;
 
 
 	public:

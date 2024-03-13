@@ -1,0 +1,12 @@
+
+
+/*
+ * SAI Model.
+*/ 
+
+
+sai icuasw_pus_service_iface{
+
+	uri := .icuasw_pus_service_iface;
+	version :=v1;
+};
